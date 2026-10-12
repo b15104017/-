@@ -1,0 +1,685 @@
+<!DOCTYPE html>
+<html lang="zh-Hant">
+
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <meta name="description" content="晨星書房 · 個人小說作品展示網頁。收錄奇幻冒險、都會懸疑、微光科幻與生活散文作品，提供沉浸式專注閱讀體驗。">
+  <meta name="keywords" content="小說, 作品集, 原創小說, 線上閱讀, 連載小說, 晨星書房, 讀者書房">
+  <meta name="author" content="晨星">
+  <title>晨星書房 · 個人小說作品展示與沉浸閱讀</title>
+
+  <!-- Google Fonts: 典雅思源宋體與黑體，營造書店溫潤紙感 -->
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link
+    href="https://fonts.googleapis.com/css2?family=Cormorant+Garamond:ital,wght@0,500;1,500&family=Noto+Sans+TC:wght@300;400;500;600&family=Noto+Serif+TC:wght@400;600;700&display=swap"
+    rel="stylesheet">
+
+  <!-- 主樣式表 -->
+  <link rel="stylesheet" href="css/style.css">
+</head>
+
+<body>
+
+  <!-- ========================================================================
+       1. 頂部固定搜索列與主題分類 (Sticky / Fixed Navigation)
+       ======================================================================== -->
+  <header class="site-header" id="site-header">
+    <div class="container">
+      <!-- 頂部主要功能列 -->
+      <div class="header-main-row">
+        <!-- 品牌 / 筆名標誌 -->
+        <div class="brand-logo" id="brand-logo" title="返回首頁推薦">
+          <div class="brand-emblem">
+            <svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"
+              stroke-linecap="round" stroke-linejoin="round">
+              <path d="M4 19.5A2.5 2.5 0 0 1 6.5 17H20"></path>
+              <path d="M6.5 2H20v20H6.5A2.5 2.5 0 0 1 4 19.5v-15A2.5 2.5 0 0 1 6.5 2z"></path>
+              <line x1="9" y1="7" x2="15" y2="7"></line>
+              <line x1="9" y1="11" x2="13" y2="11"></line>
+            </svg>
+          </div>
+          <div class="brand-titles">
+            <span class="brand-name">晨星書房</span>
+            <span class="brand-sub">MORNINGSTAR LIT · NOVELS</span>
+          </div>
+        </div>
+
+        <!-- 搜索列 -->
+        <div class="search-container">
+          <div class="search-input-wrapper">
+            <svg class="search-icon" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"
+              stroke-linecap="round" stroke-linejoin="round">
+              <circle cx="11" cy="11" r="8"></circle>
+              <line x1="21" y1="21" x2="16.65" y2="16.65"></line>
+            </svg>
+            <input type="text" id="search-input" class="search-input" placeholder="搜尋作品名稱、關鍵字、標籤或故事簡介..."
+              autocomplete="off">
+            <button class="search-clear-btn" id="search-clear-btn" title="清除搜尋內容" aria-label="清除搜尋">
+              ✕
+            </button>
+            <span class="search-keyboard-hint">/</span>
+          </div>
+        </div>
+
+        <!-- 頂部操作按鈕 -->
+        <div class="header-actions">
+          <button class="action-pill-btn admin-btn" id="open-admin-btn" title="作者後台：視覺化新增或編輯作品">
+            <svg width="15" height="15" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"
+              stroke-linecap="round" stroke-linejoin="round">
+              <line x1="12" y1="5" x2="12" y2="19"></line>
+              <line x1="5" y1="12" x2="19" y2="12"></line>
+            </svg>
+            <span>新增作品</span>
+          </button>
+          <button class="action-pill-btn" id="open-bookshelf-btn" title="查看我收藏的書架">
+            <svg width="15" height="15" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"
+              stroke-linecap="round" stroke-linejoin="round">
+              <path d="M19 21l-7-5-7 5V5a2 2 0 0 1 2-2h10a2 2 0 0 1 2 2z"></path>
+            </svg>
+            <span>我的書架</span>
+            <span class="badge-counter" id="shelf-count-badge">0</span>
+          </button>
+        </div>
+      </div>
+
+      <!-- 標籤 / 主題分類橫向滾動列 -->
+      <nav class="category-filter-bar" id="category-filter-bar" aria-label="作品主題分類">
+        <!-- 由 JavaScript 動態生成分類標籤 (或提供預設節點) -->
+      </nav>
+    </div>
+  </header>
+
+  <!-- ========================================================================
+       2. 首頁推薦作品展示 (Hero Spotlight Section)
+       大小佔比為一個正常網頁 (Full Viewport Height)
+       ======================================================================== -->
+  <section class="hero-spotlight-section" id="hero-spotlight-section">
+    <!-- 背景裝飾微光 (淡藍與暖白漸層光暈) -->
+    <div class="hero-background-deco">
+      <div class="deco-blob-1"></div>
+      <div class="deco-blob-2"></div>
+    </div>
+
+    <div class="container">
+      <!-- 主打推薦卡片舞台 (透過 JS 可動態切換) -->
+      <div class="spotlight-card" id="spotlight-card">
+        <!-- 左側：詳細資訊與閱讀操作 -->
+        <div class="spotlight-info">
+          <div class="spotlight-meta-top">
+            <span class="spotlight-badge" id="spotlight-badge">
+              <svg width="12" height="12" viewBox="0 0 24 24" fill="currentColor">
+                <polygon
+                  points="12 2 15.09 8.26 22 9.27 17 14.14 18.18 21.02 12 17.77 5.82 21.02 7 14.14 2 9.27 8.91 8.26 12 2">
+                </polygon>
+              </svg>
+              本月主打推薦
+            </span>
+            <span class="spotlight-tag-item" id="spotlight-category">奇幻冒險</span>
+            <span class="spotlight-tag-item" id="spotlight-status">已完結</span>
+            <span class="spotlight-tag-item" id="spotlight-readtime">約 12 小時閱讀</span>
+          </div>
+
+          <div class="spotlight-title-group">
+            <div class="spotlight-en-title" id="spotlight-en-title">THE UNBOUND SEA</div>
+            <h1 class="spotlight-title" id="spotlight-title">青空與永恆之海</h1>
+          </div>
+
+          <!-- 摘錄金句 -->
+          <div class="spotlight-quote-block">
+            <p class="spotlight-quote-text" id="spotlight-quote">
+              「若世界已將你遺忘，我便將整片天空摺成小舟，帶你航向未曾被寫入歷史的彼岸。」
+            </p>
+          </div>
+
+          <!-- 故事簡介 -->
+          <p class="spotlight-synopsis" id="spotlight-synopsis">
+            當漫長潮水終於退去，那些被大崩解時代遺忘的白珊瑚群島重新浮出地表。一名失去全部記憶的年輕領航員，在一艘宛如白紙摺就的輕舟上甦醒。在沒有盡頭的蒼藍海面上，他將尋找星辰遺落的最初約定。
+          </p>
+
+          <!-- 數據指標欄 -->
+          <div class="spotlight-stats-row">
+            <div class="stat-item">
+              <span class="stat-label">全文字數</span>
+              <span class="stat-value" id="spotlight-words">32 萬字</span>
+            </div>
+            <div class="stat-item">
+              <span class="stat-label">最新修訂</span>
+              <span class="stat-value" id="spotlight-updated">2026-03-15</span>
+            </div>
+            <div class="stat-item">
+              <span class="stat-label">專屬特點</span>
+              <span class="stat-value" id="spotlight-highlight">2025 年度奇幻選書</span>
+            </div>
+          </div>
+
+          <!-- 操作按鈕群 -->
+          <div class="spotlight-actions">
+            <button class="btn-primary" id="spotlight-read-btn">
+              <svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"
+                stroke-linecap="round" stroke-linejoin="round">
+                <path d="M2 3h6a4 4 0 0 1 4 4v14a3 3 0 0 0-3-3H2z"></path>
+                <path d="M22 3h-6a4 4 0 0 0-4 4v14a3 3 0 0 1 3-3h7z"></path>
+              </svg>
+              <span>立即開始試讀</span>
+            </button>
+            <button class="btn-secondary" id="spotlight-save-btn">
+              <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"
+                stroke-linecap="round" stroke-linejoin="round">
+                <path d="M19 21l-7-5-7 5V5a2 2 0 0 1 2-2h10a2 2 0 0 1 2 2z"></path>
+              </svg>
+              <span id="spotlight-save-text">加入書架</span>
+            </button>
+          </div>
+        </div>
+
+        <!-- 右側：立體書本精裝展示 (3D Hardcover Book Showcase) -->
+        <div class="spotlight-visual">
+          <div class="book-showcase-wrapper">
+            <div class="book-ribbon"></div>
+            <div class="book-3d" id="spotlight-book-3d" title="點擊直接進入閱讀模式">
+              <div class="book-spine-highlight"></div>
+              <img src="assets/images/cover_sea.jpg" alt="青空與永恆之海 書籍封面" class="book-cover-img" id="spotlight-cover-img">
+            </div>
+          </div>
+
+          <!-- 輪播切換控制 -->
+          <div class="spotlight-carousel-controls">
+            <div class="carousel-indicators" id="carousel-indicators">
+              <!-- JS 動態生成圓點 -->
+            </div>
+            <div class="carousel-arrows">
+              <button class="arrow-btn" id="prev-featured-btn" title="上一本推薦" aria-label="上一本">
+                <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"
+                  stroke-linecap="round" stroke-linejoin="round">
+                  <polyline points="15 18 9 12 15 6"></polyline>
+                </svg>
+              </button>
+              <button class="arrow-btn" id="next-featured-btn" title="下一本推薦" aria-label="下一本">
+                <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"
+                  stroke-linecap="round" stroke-linejoin="round">
+                  <polyline points="9 18 15 12 9 6"></polyline>
+                </svg>
+              </button>
+            </div>
+          </div>
+        </div>
+      </div>
+
+      <!-- 向下滾動探索指引 -->
+      <a href="#catalog-section" class="scroll-down-hint">
+        <span>探索主題書架與長篇專區</span>
+        <svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"
+          stroke-linecap="round" stroke-linejoin="round">
+          <polyline points="6 9 12 15 18 9"></polyline>
+        </svg>
+      </a>
+    </div>
+  </section>
+
+  <!-- ========================================================================
+       3. 主題分區與作品書架 (Thematic Shelf Section)
+       ======================================================================== -->
+  <section class="content-section" id="catalog-section">
+    <div class="container">
+      <!-- 區塊標頭 -->
+      <div class="section-header-block">
+        <div class="section-title-wrap">
+          <span class="section-label">THEMATIC COLLECTION</span>
+          <h2 class="section-title" id="current-section-title">精選全系列作品巡禮</h2>
+          <p class="section-desc">在文字構築的世界裡慢下腳步，探索長篇連載與短篇創作</p>
+        </div>
+        <div class="section-tools">
+          <span class="result-count-label" id="result-count-label">共 6 部作品</span>
+        </div>
+      </div>
+
+      <!-- 作品網格 (JavaScript 動態渲染) -->
+      <div class="novels-grid" id="novels-grid">
+        <!-- 動態渲染卡片清單 -->
+      </div>
+    </div>
+  </section>
+
+  <!-- ========================================================================
+       4. 專屬預留長條形按鈕主題區塊 (Reserved Long-Strip Buttons Section)
+       「往下是主題分區，先預留長條形按鈕，我之後再想要加什麼」
+       ======================================================================== -->
+  <section class="reserved-strip-section" id="reserved-strip-section">
+    <div class="container">
+      <div class="strip-section-card-wrapper">
+        <div class="strip-intro-header">
+          <h3 class="strip-header-title">
+            <svg width="22" height="22" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"
+              stroke-linecap="round" stroke-linejoin="round">
+              <rect x="3" y="3" width="18" height="18" rx="2" ry="2"></rect>
+              <line x1="3" y1="9" x2="21" y2="9"></line>
+              <line x1="9" y1="21" x2="9" y2="9"></line>
+            </svg>
+            <span>主題專案與擴充企劃（專屬預留區）</span>
+          </h3>
+          <span class="strip-header-note">預留長條形功能按鈕 · 隨時可自訂新增</span>
+        </div>
+
+        <!-- 長條形按鈕清單 -->
+        <div class="strip-buttons-list" id="strip-buttons-list">
+          <!-- 由 JavaScript 或 data.js 渲染長條按鈕 -->
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <!-- ========================================================================
+       5. 書摘金句與生活隨筆 (Quotes & Inspiration Section)
+       ======================================================================== -->
+  <section class="content-section" id="quotes-section">
+    <div class="container">
+      <div class="section-header-block">
+        <div class="section-title-wrap">
+          <span class="section-label">SELECTED EXCERPTS</span>
+          <h2 class="section-title">字句迴響 · 經典書摘</h2>
+          <p class="section-desc">拾起那些在時光中發光的句子，安放短暫的共鳴</p>
+        </div>
+      </div>
+
+      <div class="quotes-grid" id="quotes-grid">
+        <!-- JavaScript 動態渲染書摘卡片 -->
+      </div>
+    </div>
+  </section>
+
+  <!-- ========================================================================
+       6. 網頁最底列 · 社群帳號追蹤專區與頁尾 (Social Channels Hub & Footer)
+       「網頁最底列是羅列社群帳號的地方，方便有興趣的讀者去追蹤」
+       ======================================================================== -->
+  <footer class="site-footer" id="social-footer">
+    <div class="container">
+      <!-- 社群追蹤大專區 -->
+      <div class="footer-social-wrapper">
+        <div class="footer-social-header">
+          <span class="footer-social-badge">STAY CONNECTED</span>
+          <h3 class="footer-social-title">關注作者動態 · 接收第一手更新</h3>
+          <p class="footer-social-sub">無論是連載新章上線、出版專案進度，或是寫作檯邊的日常隨筆，歡迎在不同平台與我相遇。</p>
+        </div>
+
+        <!-- 羅列社群帳號卡片網格 -->
+        <div class="social-channels-grid" id="social-channels-grid">
+          <!-- 由 JavaScript 動態生成包含 X(Twitter)、Instagram、Threads、vocus、Penana、Discord、Email 的社群卡片 -->
+        </div>
+      </div>
+
+      <!-- 頁尾結語與版權資訊 -->
+      <div class="footer-bottom-info">
+        <div class="footer-quote-peace">
+          「靜心閱讀，字裡行間與你溫柔相遇。」
+        </div>
+        <div class="footer-copyright">
+          © 2026 晨星書房 (Morningstar Lit) · 個人小說作品展示網頁 · 版權所有
+        </div>
+      </div>
+    </div>
+  </footer>
+
+  <!-- ========================================================================
+       7. 沉浸式小說試讀彈窗 (Immersive Reader Modal)
+       ======================================================================== -->
+  <div class="reader-modal-overlay" id="reader-modal-overlay" role="dialog" aria-modal="true"
+    aria-labelledby="reader-modal-title">
+    <div class="reader-modal-content theme-cream" id="reader-modal-content">
+      <!-- 頂部工具列 -->
+      <div class="reader-toolbar">
+        <div class="reader-book-identity">
+          <h3 class="reader-book-title" id="reader-modal-title">青空與永恆之海</h3>
+          <span class="reader-chapter-name" id="reader-chapter-name">第一章 · 潮汐退去的黎明</span>
+        </div>
+
+        <div class="reader-controls-group">
+          <!-- 字級調整 -->
+          <div class="font-size-adjuster" title="調整閱讀字級大小">
+            <button class="font-btn" data-size="sm">小</button>
+            <button class="font-btn active" data-size="md">中</button>
+            <button class="font-btn" data-size="lg">大</button>
+          </div>
+
+          <!-- 背景主題切換 (米白、淡藍、夜讀) -->
+          <div class="theme-palette-switch" title="切換閱讀色彩">
+            <span class="color-dot color-dot-cream active" data-theme="theme-cream" title="米白宣紙"></span>
+            <span class="color-dot color-dot-blue" data-theme="theme-blue" title="淡藍水境"></span>
+            <span class="color-dot color-dot-dark" data-theme="theme-dark" title="沉靜墨夜"></span>
+          </div>
+
+          <!-- 關閉按鈕 -->
+          <button class="reader-close-btn" id="reader-close-btn" title="關閉閱讀窗 (Esc)" aria-label="關閉閱讀窗">
+            ✕
+          </button>
+        </div>
+      </div>
+
+      <!-- 章節切換列 -->
+      <div class="reader-chapter-tabs" id="reader-chapter-tabs">
+        <!-- 動態渲染章節按鈕 -->
+      </div>
+
+      <!-- 閱讀正文捲動區 -->
+      <div class="reader-body-scroll font-md" id="reader-body-scroll">
+        <!-- 動態注入文章段落 -->
+      </div>
+    </div>
+  </div>
+
+  <!-- ========================================================================
+       7.5 書籍詳細資訊彈窗 (Book Detail Modal)
+       ======================================================================== -->
+  <div class="book-detail-overlay" id="book-detail-overlay">
+    <div class="book-detail-modal">
+      <button class="detail-close-btn" id="detail-close-btn" aria-label="關閉視窗">✕</button>
+      <div class="book-detail-grid">
+        <!-- 左側：封面展示與快速統計 -->
+        <div class="book-detail-visual">
+          <div class="book-showcase-wrapper modal-visual-wrap">
+            <div class="book-ribbon"></div>
+            <div class="book-3d" id="detail-book-3d">
+              <div class="book-spine-highlight"></div>
+              <img src="" alt="書籍封面" class="book-cover-img" id="detail-cover-img">
+            </div>
+          </div>
+          <div class="detail-quick-stats">
+            <div class="stat-pill" id="detail-words"></div>
+            <div class="stat-pill" id="detail-updated"></div>
+          </div>
+        </div>
+
+        <!-- 右側：完整書籍資訊與操作按鈕 -->
+        <div class="book-detail-info">
+          <div class="spotlight-meta-top">
+            <span class="spotlight-badge" id="detail-category-badge"></span>
+            <span class="spotlight-tag-item" id="detail-status"></span>
+            <span class="spotlight-tag-item" id="detail-readtime"></span>
+          </div>
+
+          <div class="spotlight-title-group">
+            <div class="spotlight-en-title" id="detail-en-title"></div>
+            <h2 class="spotlight-title" id="detail-title"></h2>
+          </div>
+
+          <div class="spotlight-quote-block">
+            <p class="spotlight-quote" id="detail-quote"></p>
+          </div>
+
+          <p class="spotlight-synopsis" id="detail-synopsis"></p>
+
+          <div class="detail-tags-row" id="detail-tags"></div>
+
+          <div class="spotlight-highlight-box">
+            <span class="highlight-label">作品亮點</span>
+            <span class="highlight-text" id="detail-highlight"></span>
+          </div>
+
+          <div class="spotlight-actions">
+            <button class="btn-primary" id="detail-read-btn">
+              <svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"
+                stroke-linecap="round" stroke-linejoin="round">
+                <path d="M2 3h6a4 4 0 0 1 4 4v14a3 3 0 0 0-3-3H2z"></path>
+                <path d="M22 3h-6a4 4 0 0 1 4 4v14a3 3 0 0 1 3-3h7z"></path>
+              </svg>
+              <span>立即開始試讀</span>
+            </button>
+            <button class="btn-secondary" id="detail-save-btn">
+              <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"
+                stroke-linecap="round" stroke-linejoin="round">
+                <path d="M19 21l-7-5-7 5V5a2 2 0 0 1 2-2h10a2 2 0 0 1 2 2z"></path>
+              </svg>
+              <span id="detail-save-text">加入書架</span>
+            </button>
+          </div>
+        </div>
+      </div>
+    </div>
+  </div>
+
+  <!-- ========================================================================
+       8. 我的書架側邊抽屜 (Bookshelf Drawer)
+       ======================================================================== -->
+  <div class="drawer-overlay" id="drawer-overlay">
+    <div class="bookshelf-drawer">
+      <div class="drawer-header">
+        <h3 class="drawer-title">我的收藏書架</h3>
+        <button class="reader-close-btn" id="drawer-close-btn" aria-label="關閉書架">✕</button>
+      </div>
+      <div class="drawer-body" id="drawer-body">
+        <!-- 動態渲染書架書籍 -->
+      </div>
+    </div>
+  </div>
+
+  <!-- ========================================================================
+       9. 長條按鈕自訂說明彈窗 (Customization Guide Modal)
+       方便使用者未來更換長條按鈕內容
+       ======================================================================== -->
+  <div class="guide-modal-overlay" id="guide-modal-overlay">
+    <div class="guide-modal-box">
+      <div class="guide-icon-pill">
+        <svg width="22" height="22" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"
+          stroke-linecap="round" stroke-linejoin="round">
+          <circle cx="12" cy="12" r="10"></circle>
+          <line x1="12" y1="16" x2="12" y2="12"></line>
+          <line x1="12" y1="8" x2="12.01" y2="8"></line>
+        </svg>
+      </div>
+      <h3 class="guide-modal-title">如何自訂或新增長條形按鈕？</h3>
+      <p style="font-size: 0.92rem; color: var(--text-secondary); line-height: 1.7;">
+        這是一個為您預留的長條按鈕功能區塊！所有長條按鈕的標題、小標、標籤與點擊連結，都存放在 <code>js/data.js</code> 檔案中的 <code>RESERVED_STRIP_BUTTONS</code>
+        陣列內。
+      </p>
+      <div class="guide-code-snippet">// 您可以隨時新增或修改項目：
+        {
+        id: "btn-my-new-project",
+        tag: "自訂企劃",
+        title: "【新專案】你的自訂企劃名稱",
+        subtitle: "填寫吸引讀者的一句話介紹...",
+        icon: "star",
+        linkText: "點擊前往"
+        }</div>
+      <p style="font-size: 0.85rem; color: var(--text-muted);">
+        您可以將其連接至外部連結（如 Google 表單、方格子專題、博客來購書網址），或者設定點擊彈窗！
+      </p>
+      <div style="text-align: right;">
+        <button class="btn-primary" id="guide-modal-confirm-btn">我知道了</button>
+      </div>
+    </div>
+  </div>
+
+  <!-- ========================================================================
+       9.4 作者解鎖登入彈窗 (Author Authentication Modal)
+       ======================================================================== -->
+  <div class="auth-modal-overlay" id="auth-modal-overlay">
+    <div class="auth-modal-box">
+      <div class="auth-icon-pill">
+        <svg width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"
+          stroke-linecap="round" stroke-linejoin="round">
+          <rect x="3" y="11" width="18" height="11" rx="2" ry="2"></rect>
+          <path d="M7 11V7a5 5 0 0 1 10 0v4"></path>
+        </svg>
+      </div>
+      <h3 class="auth-modal-title">作者身份驗證</h3>
+      <p class="auth-modal-desc">
+        為防止一般讀者誤觸或修改作品內容，開啟作者後台前請先輸入解鎖密碼。<br>
+        <span style="font-size: 0.82rem; color: var(--blue-600);">(預設作者密碼：<code>0314</code>)</span>
+      </p>
+
+      <form id="auth-passcode-form" class="auth-form">
+        <input type="password" id="auth-passcode-input" class="form-input auth-input" placeholder="請輸入作者密碼..." required
+          autocomplete="current-password">
+        <div class="auth-actions">
+          <button type="button" class="btn-secondary" id="auth-cancel-btn">取消</button>
+          <button type="submit" class="btn-primary" id="auth-submit-btn">解鎖作者後台</button>
+        </div>
+      </form>
+    </div>
+  </div>
+
+  <!-- ========================================================================
+       9.5 作者作品管理與視覺化表單 (Author Book Admin Modal)
+       ======================================================================== -->
+  <div class="admin-modal-overlay" id="admin-modal-overlay">
+    <div class="admin-modal-box">
+      <div class="admin-modal-header">
+        <div class="admin-header-title-wrap">
+          <span class="admin-badge">作品後台</span>
+          <h3 class="admin-modal-title">快速新增作品與程式碼生成器</h3>
+        </div>
+        <div class="admin-header-tools">
+          <button type="button" class="admin-lock-btn" id="admin-lock-btn" title="鎖定登出作者後台">🔒 退出登入</button>
+          <button class="reader-close-btn" id="admin-close-btn" aria-label="關閉管理介面">✕</button>
+        </div>
+      </div>
+
+      <div class="admin-modal-body">
+        <p class="admin-subtitle">填寫表單後點擊「儲存」，可在網頁即時預覽，或直接「複製程式碼」貼至 <code>data.js</code>。</p>
+
+        <form id="admin-book-form" class="admin-form-grid">
+          <div class="form-group col-span-2 select-book-mode-bar">
+            <label class="form-label" style="color: var(--blue-700);">切換模式 / 選擇欲編輯的作品：</label>
+            <select id="form-select-book-mode" class="form-select highlight-select">
+              <option value="__NEW__"> [新增全新作品]</option>
+              <!-- JS 動態注入現有作品清單 -->
+            </select>
+          </div>
+
+          <div class="form-group col-span-2">
+            <label class="form-label">作品名稱 *</label>
+            <input type="text" id="form-title" class="form-input" placeholder="例如：青空與永恆之海" required>
+          </div>
+
+          <div class="form-group col-span-2">
+            <label class="form-label">英文 / 副標題</label>
+            <input type="text" id="form-enTitle" class="form-input" placeholder="例如：The Unbound Sea">
+          </div>
+
+          <div class="form-group">
+            <label class="form-label">作品分類 *</label>
+            <input type="text" id="form-category" class="form-input" placeholder="例如：長篇小說 / 奇幻冒險" required>
+          </div>
+
+          <div class="form-group">
+            <label class="form-label">連載狀態 *</label>
+            <select id="form-status" class="form-select">
+              <option value="連載中">連載中</option>
+              <option value="已完結">已完結</option>
+            </select>
+          </div>
+
+          <div class="form-group">
+            <label class="form-label">總字數</label>
+            <input type="text" id="form-wordCount" class="form-input" placeholder="例如：12 萬字">
+          </div>
+
+          <div class="form-group">
+            <label class="form-label">預估閱讀時間</label>
+            <input type="text" id="form-readTime" class="form-input" placeholder="例如：約 3.5 小時">
+          </div>
+
+          <div class="form-group">
+            <label class="form-label">本月主打推薦 *</label>
+            <select id="form-isFeatured" class="form-select">
+              <option value="false">一般作品展示</option>
+              <option value="true">本月主打推薦 (首頁大圖輪播)</option>
+            </select>
+          </div>
+
+          <div class="form-group">
+            <label class="form-label">首頁展示順序 / 排序權重</label>
+            <input type="number" id="form-featuredRank" class="form-input" placeholder="數字越小越靠前 (如: 1, 2, 3)" min="1"
+              step="1">
+          </div>
+
+          <div class="form-group col-span-2">
+            <label class="form-label">分類標籤 (請用逗號分隔)</label>
+            <input type="text" id="form-tags" class="form-input" placeholder="例如：長篇, 原創, 奇幻, 旅行">
+          </div>
+
+          <div class="form-group col-span-2">
+            <label class="form-label">簡短金句 / 宣傳標語</label>
+            <input type="text" id="form-quote" class="form-input" placeholder="例如：「若世界已將你遺忘，我便將整片天空摺成小舟...」">
+          </div>
+
+          <div class="form-group col-span-2">
+            <label class="form-label">故事簡介 (Synopsis) *</label>
+            <textarea id="form-synopsis" class="form-textarea" rows="3" placeholder="填寫故事簡介..." required></textarea>
+          </div>
+
+          <div class="form-group col-span-2">
+            <label class="form-label">作品亮點 / 評語</label>
+            <input type="text" id="form-highlight" class="form-input" placeholder="例如：2026 年度原創推薦 · 讀者好評 4.9 顆星">
+          </div>
+
+          <div class="form-group col-span-2">
+            <label class="form-label">選擇封面樣式 (自動整合 assets/images 圖片檔)</label>
+            <select id="form-cover" class="form-select">
+              <!-- 由 JS 動態自動讀取並渲染圖檔選單 -->
+            </select>
+            <input type="text" id="form-cover-custom" class="form-input"
+              placeholder="例如：assets/images/my_cover.jpg 或 圖片網址" style="display:none; margin-top: 6px;">
+          </div>
+
+          <!-- 動態多章節編輯區塊 -->
+          <div class="form-group col-span-2 chapters-manager-block">
+            <div class="chapters-header">
+              <label class="form-label" style="margin: 0;">試讀章節列表與內文編輯</label>
+              <button type="button" class="btn-secondary add-ch-btn" id="add-chapter-btn">
+                <span>＋ 新增一章試讀</span>
+              </button>
+            </div>
+            <div class="chapters-list-container" id="chapters-list-container">
+              <!-- JS 動態注入章節編輯區塊 -->
+            </div>
+          </div>
+
+          <div class="form-group form-actions col-span-2">
+            <button type="submit" class="btn-primary form-submit-main" id="admin-save-btn">
+              <span>儲存作品內容 (網頁即時生效)</span>
+            </button>
+            <div class="form-actions-secondary">
+              <button type="button" class="btn-secondary" id="admin-preview-btn">
+                <span>預覽此書 (讀者視角)</span>
+              </button>
+              <button type="button" class="btn-secondary" id="admin-export-code-btn">
+                <span>複製程式碼 (data.js)</span>
+              </button>
+            </div>
+          </div>
+        </form>
+
+        <!-- 程式碼輸出預覽區 -->
+        <div class="code-export-box" id="code-export-box" style="display:none;">
+          <div class="code-export-header">
+            <span>已產生的程式碼 (開啟 <code>js/data.js</code> 貼上即可永久保存)：</span>
+            <button class="btn-secondary" id="copy-code-snippet-btn"
+              style="padding: 4px 12px; font-size: 0.8rem;">複製全文程式碼</button>
+          </div>
+          <pre><code id="export-code-display"></code></pre>
+        </div>
+      </div>
+    </div>
+  </div>
+
+  <!-- ========================================================================
+       10. 輕量通知 Toast & 回到頂部按鈕
+       ======================================================================== -->
+  <div class="toast-notice" id="toast-notice">已更新</div>
+
+  <button class="back-to-top-btn" id="back-to-top-btn" title="回到頂部" aria-label="回到頂部">
+    <svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"
+      stroke-linecap="round" stroke-linejoin="round">
+      <line x1="12" y1="19" x2="12" y2="5"></line>
+      <polyline points="5 12 12 5 19 12"></polyline>
+    </svg>
+  </button>
+
+  <!-- 引入資料與核心互動腳本 -->
+  <script src="js/data.js"></script>
+  <script src="js/app.js"></script>
+</body>
+
+</html>
